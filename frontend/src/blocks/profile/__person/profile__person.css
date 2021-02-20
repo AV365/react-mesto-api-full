@@ -1,0 +1,25 @@
+.profile__person {
+
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 42px;
+    color: var(--color-content-text);
+
+
+    padding: 0;
+    margin: 0 17px 7px 0;
+    display: inline-block;
+
+}
+
+
+@media screen and (max-width: 710px) {
+    .profile__person {
+        text-align: center;
+        margin: 0 10px 14px 0;
+        font-size: 27px;
+
+    }
+
+}

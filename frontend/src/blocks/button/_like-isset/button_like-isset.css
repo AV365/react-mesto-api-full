@@ -1,0 +1,20 @@
+.button_like-isset {
+    width: 21px;
+    height: 19px;
+
+    background-image: url("../../../images/icon-heart-fill.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    border: 0;
+    background-color: var(--color-content-text);
+    outline: none;
+}
+
+
+.button_like-isset:hover {
+
+    opacity: .6;
+    cursor: pointer;
+
+}

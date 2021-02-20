@@ -1,0 +1,15 @@
+.card-item__footer {
+
+    background-color: var(--color-content-text);
+    height: 79px;
+    margin: 0;
+    padding: 25px 21px 31px 21px;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 0 0 10px 10px;
+
+}

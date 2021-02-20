@@ -1,0 +1,5 @@
+.infotooltip_type_error {
+    background-image: url("../../../images/icon-infotooltip-error.svg");
+    background-repeat: no-repeat;
+    background-position: top 26px center;
+}

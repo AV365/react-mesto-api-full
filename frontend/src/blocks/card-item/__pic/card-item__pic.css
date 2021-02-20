@@ -1,0 +1,17 @@
+.card-item__pic {
+
+    border-radius: 10px 10px 0 0;
+    width: 282px;
+    height: 282px;
+    object-fit: cover;
+}
+
+
+.card-item__pic:hover {
+
+
+    opacity: .8;
+    cursor: pointer;
+
+
+}

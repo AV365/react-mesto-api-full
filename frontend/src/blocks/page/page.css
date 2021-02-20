@@ -1,0 +1,24 @@
+
+.page {
+    padding: 0;
+    margin: auto;
+
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+
+    --color-content-text: #fff;
+    --color-content-bg: #000;
+    --color-content-additional: #545454;
+
+
+    background-color: var(--color-content-bg);
+    max-width: 882px;
+
+}

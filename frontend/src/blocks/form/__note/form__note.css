@@ -1,0 +1,22 @@
+.form__note {
+    font-family: "Inter", "Times New Roman", "Helvetica Neue", "Arial", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: var(--color-content-text);
+}
+
+.form__note a:link {
+    color: var(--color-content-text);
+    text-decoration: none;
+}
+.form__note a:visited {
+    color: var(--color-content-text);
+}
+
+.form__note a:hover {
+    color: var(--color-content-text);
+    opacity: .8;
+}

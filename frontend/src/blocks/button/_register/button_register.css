@@ -1,0 +1,23 @@
+.button_register {
+    width: 358px;
+    height: 50px;
+    background-color: var(--color-content-text);
+
+    border-radius: 2px;
+    border: 0;
+
+    font-family: "Inter", "Times New Roman", "Helvetica Neue", "Arial", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: var(--color-content-bg);
+
+    margin: 216px 0 0 0;
+}
+
+.button_register:hover {
+    background: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}

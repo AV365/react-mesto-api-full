@@ -1,0 +1,18 @@
+.card-item__title {
+
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: var(--color-content-bg);
+
+    padding: 0;
+    margin: 0;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    max-width: 210px;
+}

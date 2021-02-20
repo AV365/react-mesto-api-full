@@ -1,0 +1,11 @@
+.navbar__user {
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    text-align: right;
+    font-weight: 500;
+    color: var(--color-content-text);
+    padding: 0;
+    margin: 0 24px 0 0;
+
+    display: inline-block;
+}

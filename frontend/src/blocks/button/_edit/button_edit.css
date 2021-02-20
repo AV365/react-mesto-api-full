@@ -1,0 +1,20 @@
+.button_edit {
+
+    width: 24px;
+    height: 24px;
+    background-image: url("../../../images/icon-edit.svg");
+    background-position: center center;
+    background-color: var(--color-content-bg);
+    background-repeat: no-repeat;
+    border: 1px solid var(--color-content-text);
+    vertical-align: text-bottom;
+    cursor: pointer;
+}
+
+
+.button_edit:hover {
+
+    opacity: .6;
+    cursor: pointer;
+
+}

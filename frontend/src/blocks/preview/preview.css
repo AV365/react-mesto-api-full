@@ -1,0 +1,14 @@
+
+.preview {
+    display: inline-block;
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+
+
+}
+
+

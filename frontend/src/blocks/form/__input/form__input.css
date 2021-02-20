@@ -1,0 +1,23 @@
+.form__input {
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+
+    font-family: 'Inter', 'Times New Roman', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 50px;
+    outline: none;
+    width: 99%;
+
+}
+
+/*.form__input:focus {*/
+/*    outline: none;*/
+/*    border: 2px solid cornflowerblue;*/
+/*}*/
+
+
+/*.form__input:invalid {*/
+/*    border-bottom: 1px solid rgb(255, 0, 0);*/
+/*}*/

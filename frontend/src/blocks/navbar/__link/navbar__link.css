@@ -1,0 +1,19 @@
+.navbar__link {
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    text-align: right;
+    font-weight: 400;
+    color: #A9A9A9;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar__link:link {
+    text-decoration: none;
+
+}
+
+.navbar__link:hover {
+    opacity: .8;
+
+}

@@ -1,0 +1,29 @@
+.logo {
+    margin-top: 45px;
+    width: 142px;
+    height: 33px;
+
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 882px) {
+
+    .logo {
+        padding-left: 27px;
+        margin-top: 28px;
+
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+
+    .logo {
+
+        width: 104px;
+        height: 25px;
+    }
+
+}
+
+
