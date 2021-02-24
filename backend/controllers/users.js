@@ -38,40 +38,30 @@ const getUser = (req, res, next) => {
       if (!data) {
         const error = { message: `Пользователь ${req.param('id')} не найден!`, statusCode: 404 };
         next(error);
-
       }
-
 
       return res.send(data);
     })
     .catch((err) => {
-
       const error = { message: err.message, statusCode: 500 };
       next(error);
-    }
-
-
-);
+    });
 };
 
 const getMyInfo = (req, res, next) => {
-    User.findById(req.user._id)
+  User.findById(req.user._id)
     .then((data) => {
       if (!data) {
-      const error = { message: `Пользователь ${req.param('id')} не найден!`, statusCode: 404 };
-      next(error);
-
-    }
-
+        const error = { message: `Пользователь ${req.param('id')} не найден!`, statusCode: 404 };
+        next(error);
+      }
 
       return res.send(data);
     })
     .catch((err) => {
-
-        const error = { message: err.message, statusCode: 500 };
-        next(error);
-      }
-    );
+      const error = { message: err.message, statusCode: 500 };
+      next(error);
+    });
 };
 
 const postUser = (req, res, next) => {
@@ -92,7 +82,7 @@ const postUser = (req, res, next) => {
     })
     .catch((err) => {
       next({ message: 'Пользователь с таким email уже зарегистрирован', statusCode: 400 });
-      //res.status(400).send(err)
+      // res.status(400).send(err)
     });
 };
 
@@ -103,7 +93,6 @@ const updateUserProfile = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next({ message: err.message, statusCode: 400 });
-
       }
     })
     .then((user) => res.send({ data: user }))
@@ -123,5 +112,5 @@ const updateUserAvatar = (req, res) => {
     .catch(() => next({ message: 'Ошибка сервера', statusCode: 500 }));
 };
 module.exports = {
-  getUsers, getUser, postUser, updateUserProfile, updateUserAvatar, login, getMyInfo
+  getUsers, getUser, postUser, updateUserProfile, updateUserAvatar, login, getMyInfo,
 };

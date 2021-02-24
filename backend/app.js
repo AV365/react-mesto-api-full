@@ -1,13 +1,20 @@
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
 
 const options = {
   origin: [
     'http://localhost:8080',
+    'http://mesto.av365.ru',
+    'http://www.mesto.av365',
     'https://mesto.av365.ru',
-    'https://www.mesto.av365/ru',
+    'https://www.mesto.av365',
   ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],  preflightContinue: false,  optionsSuccessStatus: 204,  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],  credentials: true,};
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
 const app = express();
 const PORT = 3001;
@@ -21,14 +28,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb',
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    autoIndex: true
+    autoIndex: true,
   });
 
-
 const { errors } = require('celebrate');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-
 const bodyParser = require('body-parser');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 app.use('*', cors(options));
 
@@ -36,8 +41,6 @@ app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true,
 }));
-
-
 
 const router = require('./routes');
 
@@ -49,18 +52,16 @@ const router = require('./routes');
 //   next();
 // });
 
-
 app.use(requestLogger);
 app.use('/', router);
 app.use('*', (req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
 });
 
-//лог ошибок
+// лог ошибок
 app.use(errorLogger);
 
-
-//Обработка ошибок
+// Обработка ошибок
 
 app.use(errors()); // обработчик ошибок celebrate
 
@@ -75,7 +76,7 @@ app.use((err, req, res, next) => {
       // проверяем статус и выставляем сообщение в зависимости от него
       message: statusCode === 500
         ? 'На сервере произошла ошибка'
-        : message
+        : message,
     });
 });
 
