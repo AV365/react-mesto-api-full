@@ -6,6 +6,8 @@ import * as auth from "../../utils/auth";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 //import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
+import validator from 'validator';
+
 function Register({
   onRegister,
   infotooltipMessage,
@@ -35,9 +37,11 @@ function Register({
   function handleSubmit(e) {
     e.preventDefault();
     let { email, password } = userData;
-    onRegister(email, password)
-      .then((res) => {})
-      .catch((err) => {});
+    if (validator.isEmail(email)) {
+      onRegister(email, password)
+        .then((res) => {})
+        .catch((err) => {});
+    }
   }
 
   return (

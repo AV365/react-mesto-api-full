@@ -4,6 +4,8 @@ import AuthForm from "../AuthForm/AuthForm";
 import * as auth from "../../utils/auth";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
+import validator from 'validator';
+
 function Login({
   onLogin,
   infotooltipMessage,
@@ -30,9 +32,13 @@ function Login({
     e.preventDefault();
 
     let { email, password } = userData;
-    onLogin(email, password)
-      .then((res) => {})
-      .catch((err) => {});
+
+    if (validator.isEmail(email)) {
+      onLogin(email, password)
+        .then((res) => {})
+        .catch((err) => {});
+    }
+
   }
 
   return (
