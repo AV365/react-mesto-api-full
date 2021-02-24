@@ -28,6 +28,8 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true,
 }));
 
+app.use('*', cors());
+
 const router = require('./routes');
 
 // app.use((req, res, next) => {
@@ -38,7 +40,7 @@ const router = require('./routes');
 //   next();
 // });
 
-app.use('*', cors());
+
 app.use(requestLogger);
 app.use('/', router);
 app.use('*', (req, res) => {
