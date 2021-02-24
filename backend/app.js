@@ -1,6 +1,13 @@
 const express = require('express');
 var cors = require('cors');
 
+const options = {
+  origin: [
+    'http://localhost:8080',
+    'https://mesto.av365.ru',
+    'https://www.mesto.av365/ru',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],  preflightContinue: false,  optionsSuccessStatus: 204,  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],  credentials: true,};
 
 const app = express();
 const PORT = 3001;
@@ -23,12 +30,14 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const bodyParser = require('body-parser');
 
+app.use('*', cors(options));
+
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true,
 }));
 
-app.use('*', cors());
+
 
 const router = require('./routes');
 
