@@ -16,7 +16,8 @@ export const validatorSettings = {
 
 export const apiSettings = {
   //url: "https://mesto.nomoreparties.co/v1/cohort-17/",
-  url: "http://localhost:3001/",
+  url: "http://api.mesto.av365.ru/",
+  //url: "http://localhost:3001/",
   headers: "Content-Type : application/json",
   //token: "26855ddc-0b32-46bf-95f9-95a4c6a68cde",
 };

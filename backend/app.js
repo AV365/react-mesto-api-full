@@ -38,7 +38,7 @@ const router = require('./routes');
 //   next();
 // });
 
-app.use(cors());
+app.use('*', cors());
 app.use(requestLogger);
 app.use('/', router);
 app.use('*', (req, res) => {
