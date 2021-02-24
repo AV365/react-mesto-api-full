@@ -9,7 +9,7 @@ function Card({ onCardLike, onCardClick, onCardDelete, card }) {
 
   const likesCount = card.likes.length;
 
-  console.log(card);
+  //console.log(card);
 
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.owner === currentUser._id;
