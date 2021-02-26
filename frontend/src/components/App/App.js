@@ -9,8 +9,7 @@ import {
 } from "react-router-dom";
 
 import {
-  CurrentUserContext,
-  currentUser,
+  CurrentUserContext
 } from "../../contexts/CurrentUserContext";
 
 
@@ -23,7 +22,7 @@ import Header from "./../Header/Header";
 import Footer from "./../Footer/Footer";
 import Main from "./../Main/Main";
 
-import PopupWithForm from "../PopupWithForm/PopupWithForm";
+
 import EditAvatarPopup from "../EditAvatarPopup/EditAvatarPopup";
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup";
 import AddPlacePopup from "../AddPlacePopup/AddPlacePopup";
@@ -39,7 +38,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isCardPopupOpen, setIsCardPopupOpen] = useState(false);
-  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+
 
   const [currentUser, setCurrentUser] = useState(false);
 
@@ -59,7 +58,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsCardPopupOpen(false);
-    setIsConfirmPopupOpen(false);
+
   };
 
   const handleEditProfileClick = () => {
@@ -82,7 +81,7 @@ function App() {
   const handleUpdateUser = (userData) => {
     api
       .updateUserInfo(userData.name, userData.about)
-      .then((res) => {
+      .then(() => {
         closeAllPopups();
         getUser();
       })
@@ -139,7 +138,7 @@ function App() {
   function handleCardDelete(card) {
     api
       .deleteMyPlace(card._id)
-      .then((res) => {
+      .then(() => {
 
 
         const newCards = cards.filter((i) => {
@@ -165,7 +164,7 @@ function App() {
   }
 
   function checkToken() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (localStorage.getItem("jwt")) {
         let jwt = localStorage.getItem("jwt");
         auth.getContent(jwt).then((res) => {
@@ -193,7 +192,7 @@ function App() {
     return auth
       .register(email, password)
       .then((res) => {
-        if (!res || res.status === 400) {
+        if (!res || res.status === 400 || res.status === 500 || res.status === 409) {
 
           setInfotooltipMessage("Что-то пошло не так! Попробуйте ещё раз.");
           setInfotooltipStatus(false);
@@ -231,12 +230,12 @@ function App() {
 
         setLoggedIn(true);
         localStorage.setItem("jwt", res.token);
-        checkToken().then((res) => {
+        checkToken().then(() => {
           history.push("/" );
         })
 
       })
-      .catch((err) => {
+      .catch(() => {
         return Promise.reject("ошибка");
       });
   }
@@ -265,7 +264,7 @@ function App() {
 
     //
 
-    checkToken().then((res) => {
+    checkToken().then(() => {
       getUser();
       getCards();
               }
@@ -277,10 +276,11 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      checkToken().then((res) => {
+      checkToken().then(() => {
         history.push("/");
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   return (
@@ -335,7 +335,7 @@ function App() {
           onClose={closeAllPopups}
           isOpen={isCardPopupOpen}
           card={selectedCard}
-        ></ImagePopup>
+        />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}

@@ -4,6 +4,7 @@ const cors = require('cors');
 const options = {
   origin: [
     'http://localhost:8080',
+    'http://localhost:3000',
     'http://mesto.av365.ru',
     'http://www.mesto.av365',
     'https://mesto.av365.ru',
@@ -42,15 +43,8 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true,
 }));
 
+const NotFoundError = require('./errors/404-not-found-error');
 const router = require('./routes');
-
-// app.use((req, res, next) => {
-//   req.user = {
-//     //    _id: '5ffc551b6b47372d1cb08b66',
-//     _id: '5ffc56ab6b47372d1cb08b67', // вставьте сюда _id созданного в предыдущем пункте пользователя
-//   };
-//   next();
-// });
 
 app.use(requestLogger);
 app.get('/crash-test', () => {
@@ -59,8 +53,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 app.use('/', router);
-app.use('*', (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+app.use('*', () => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден!');
 });
 
 // лог ошибок
@@ -83,6 +77,7 @@ app.use((err, req, res, next) => {
         ? 'На сервере произошла ошибка'
         : message,
     });
+  next();
 });
 
 app.listen(PORT, () => {

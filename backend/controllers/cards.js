@@ -1,12 +1,14 @@
 const Card = require('../models/card');
+const {
+  BadRequestError, InternalServerError, NotFoundError, ForbiddenError,
+} = require('../errors/index');
 
 const getCards = (req, res, next) => {
   Card.find({})
     .then((data) => res.send(data))
     .catch((err) => {
-      const error = { message: 'Ошибка сервера', statusCode: 500 };
-      return next(error);
-    });
+      throw new InternalServerError(err.message);
+    }).catch(next);
 };
 
 const postCard = (req, res, next) => {
@@ -15,31 +17,47 @@ const postCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         // res.status(400).send({ message: err.message });
-        const error = { message: err.message, statusCode: 400 };
-        return next(error);
+        // const error = { message: err.message, statusCode: 400 };
+        // return next(error);
+        throw new BadRequestError(err.message);
       }
     })
     .then((card) => res.send({ data: card }))
-    .catch((err) => {
-      const error = { message: err, statusCode: 400 };
-      return next(error);
-    });
+    .catch(next);
 };
 
 const deleteCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.id)
-    .then((data) => {
-      if (!data) {
-        const error = { message: `Карточка ${req.param('id')} не найдена!`, statusCode: 404 };
-        return next(error);
-      }
+  Card.findById(req.params.id).then((data) => {
+    if (!data) {
+      throw new BadRequestError(`Элемент ${req.params.id} не найден`);
+    }
+    if (String(data.owner) !== String(req.user._id)) {
+      throw new ForbiddenError('А теперь нельзя удалить!');
+    }
+    Card.findByIdAndRemove(req.params.id)
+      .then((card) => {
+        if (!card) {
+          throw new NotFoundError(`Карточка ${req.param('id')} не найдена!`);
+        }
+        return res.send(card);
+      });
+    res.send({ data });
+  })
+    .catch(next);
 
-      return res.send(data);
-    })
-    .catch((err) => {
-      const error = { message: err, statusCode: 500 };
-      return next(error);
-    });
+  // Card.findByIdAndRemove(req.params.id)
+  //     .then((data) => {
+  //     if (!data) {
+  //       //const error = { message: `Карточка ${req.param('id')} не найдена!`, statusCode: 404 };
+  //       //return next(error);
+  //       throw new NotFoundError(`Карточка ${req.param('id')} не найдена!`);
+  //     }
+  //     return res.send(data);
+  //   })
+  //   .catch(next)
+  //   .catch((err) => {
+  //     throw new InternalServerError(err.message);
+  //   }).catch(next);
 };
 
 const likeCard = (req, res, next) => {
@@ -50,16 +68,15 @@ const likeCard = (req, res, next) => {
   )
     .then((data) => {
       if (!data) {
-        const error = { message: `Карточка ${req.param('cardId')} не найдена!`, statusCode: 404 };
-        return next(error);
+        throw new NotFoundError(`Карточка ${req.param('cardId')} не найдена!`);
       }
-
       return res.send(data);
     })
+    .catch(next)
     .catch((err) => {
-      const error = { message: err, statusCode: 500 };
-      return next(error);
-    });
+      throw new InternalServerError(err.message);
+    })
+    .catch(next);
 };
 
 const dislikeCard = (req, res, next) => {
@@ -70,15 +87,15 @@ const dislikeCard = (req, res, next) => {
   )
     .then((data) => {
       if (!data) {
-        const error = { message: `Карточка ${req.param('cardId')} не найдена!`, statusCode: 404 };
-        return next(error);
+        throw new NotFoundError(`Карточка ${req.param('cardId')} не найдена!`);
       }
       return res.send(data);
     })
+    .catch(next)
     .catch((err) => {
-      const error = { message: err, statusCode: 500 };
-      return next(error);
-    });
+      throw new InternalServerError(err.message);
+    })
+    .catch(next);
 };
 
 module.exports = {

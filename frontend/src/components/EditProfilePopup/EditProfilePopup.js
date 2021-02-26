@@ -6,14 +6,60 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [name, setProfileName] = useState("");
   const [description, setProfileDescription] = useState("");
 
+
+
+
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [errorNameClassname, setErrorNameClassname] = useState("");
+  const [errorNameMessage, setErrorNameMessage] = useState("");
+  const [errorDescClassname, setErrorDescClassname] = useState("");
+  const [errorDescMessage, setErrorDescMessage] = useState("");
+
+
+
+
+  function submitButtonDisabled() {
+    if (errorNameMessage === '' && errorDescMessage === '' && (description.length >= 2 && description.length <= 30) && (name.length >= 2 && name.length <= 30)) {
+
+      setButtonDisabled(false);
+    }
+  }
+
+  useEffect(() => {
+    submitButtonDisabled();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, description, buttonDisabled, errorNameMessage, errorDescMessage]);
+
+
+
+
+
   const currentUser = useContext(CurrentUserContext);
 
   function handleChangeName(evt) {
     setProfileName(evt.target.value);
+    if (evt.target.value.length < 2 || evt.target.value.length > 30) {
+      setErrorNameClassname('form__error_active');
+      setErrorNameMessage('Поле Имя должно содержать от 2 до 30 символов');
+      setButtonDisabled(true);
+    }
+    else {
+      setErrorNameClassname('');
+      setErrorNameMessage('');
+    }
   }
 
   function handleChangeDescription(evt) {
     setProfileDescription(evt.target.value);
+    if (evt.target.value.length < 2 || evt.target.value.length > 30) {
+      setErrorDescClassname('form__error_active');
+      setErrorDescMessage('Поле О себе должно содержать от 2 до 30 символов');
+      setButtonDisabled(true);
+    }
+    else {
+      setErrorDescClassname('');
+      setErrorDescMessage('');
+    }
   }
 
   function handleSubmit(evt) {
@@ -38,6 +84,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonDisabled={buttonDisabled}
     >
       <fieldset className="form__set">
         <label>
@@ -53,9 +100,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             maxLength="40"
             onChange={handleChangeName}
           />
-          <span className="form__error" id="js-profile-name-error">
-            Ошибка
-          </span>
+          <span className={"form__error " + errorNameClassname}>{errorNameMessage}</span>
         </label>
         <label>
           <input
@@ -70,9 +115,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             maxLength="200"
             onChange={handleChangeDescription}
           />
-          <span className="form__error" id="js-profile-job-error">
-            Ошибка
-          </span>
+          <span className={"form__error " + errorDescClassname}>{errorDescMessage}</span>
         </label>
       </fieldset>
     </PopupWithForm>

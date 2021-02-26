@@ -9,6 +9,7 @@ function PopupWithForm({
   onClose,
   onSubmit,
   children,
+                         buttonDisabled
 }) {
   const classPopupOpened = isOpen ? " popup_opened" : "";
 
@@ -24,6 +25,7 @@ function PopupWithForm({
             aria-label="Сохранить"
             type="submit"
             className="button button_save"
+            disabled={buttonDisabled}
           >
             Сохранить
           </button>

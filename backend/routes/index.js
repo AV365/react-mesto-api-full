@@ -9,11 +9,12 @@ const auth = require('../middlewares/auth');
 const userRoutes = require('./users');
 const cardRoutes = require('./cards');
 
-
-
 router.post('/signin',
   celebrate({
     body: Joi.object().keys({
+      name: Joi.string(),
+      about: Joi.string(),
+      avatar: Joi.string(),
       email: Joi.string().required().email(),
       password: Joi.string().required().min(8),
     }),

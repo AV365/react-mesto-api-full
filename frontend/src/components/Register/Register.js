@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
 import AuthForm from "../AuthForm/AuthForm";
-import * as auth from "../../utils/auth";
+
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-//import InfoTooltip from "../InfoTooltip/InfoTooltip";
+
 
 import validator from 'validator';
 
@@ -20,10 +19,56 @@ function Register({
     password: "",
   });
 
-  const [message, setMessage] = useState("");
-  const [isResigterSucess, setIsRegisterSucess] = useState(false);
+  // const [message, setMessage] = useState("");
+  // const [isResigterSucess, setIsRegisterSucess] = useState(false);
+  //
+  // const history = useHistory();
 
-  const history = useHistory();
+
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [errorEmailClassname, setErrorEmailClassname] = useState("");
+  const [errorEmailMessage, setErrorEmailMessage] = useState("");
+  const [errorPassClassname, setErrorPassClassname] = useState("");
+  const [errorPassMessage, setErrorPassMessage] = useState("");
+
+
+
+  function checkFormValid() {
+    if (!validator.isEmail(userData.email) && userData.email !== '') {
+      setErrorEmailClassname('form__error_active');
+      setErrorEmailMessage('Поле Email должно содержать корректный адрес');
+      setButtonDisabled(true);
+    }
+    else {
+      setErrorEmailClassname('');
+      setErrorEmailMessage('');
+    }
+
+    if (userData.password.length < 8 && userData.password !== '') {
+      setErrorPassClassname('form__error_active');
+      setErrorPassMessage('Поле Пароль должно содержать не менее 8 символов');
+      setButtonDisabled(true);
+    }
+    else {
+      setErrorPassClassname('');
+      setErrorPassMessage('');
+    }
+    submitButtonDisabled();
+  }
+
+  function submitButtonDisabled() {
+    if (errorPassMessage === '' && errorEmailMessage === '' && userData.email !== '' && userData.password.length >= 8 ) {
+      setButtonDisabled(false);
+    }
+  }
+
+  useEffect(() => {    checkFormValid();
+    submitButtonDisabled();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData, buttonDisabled, errorEmailMessage, errorPassMessage]);
+
+
+
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -39,8 +84,8 @@ function Register({
     let { email, password } = userData;
     if (validator.isEmail(email)) {
       onRegister(email, password)
-        .then((res) => {})
-        .catch((err) => {});
+        .then(() => {})
+        .catch(() => {});
     }
   }
 
@@ -57,7 +102,7 @@ function Register({
               required
               onChange={handleChange}
             />
-            <span className="form__error">Ошибка</span>
+            <span className={"form__error " + errorEmailClassname}>{errorEmailMessage}</span>
           </label>
           <label>
             <input
@@ -68,14 +113,14 @@ function Register({
               required
               onChange={handleChange}
             />
-            <span className="form__error">Ошибка</span>
+            <span className={"form__error " + errorPassClassname}>{errorPassMessage}</span>
           </label>
         </fieldset>
         <button
           aria-label="Зарегистрироваться"
           type="submit"
           className="button button_register"
-          onClick={handleSubmit}
+          onClick={handleSubmit}  disabled={buttonDisabled}
         >
           Зарегистрироваться
         </button>

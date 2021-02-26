@@ -1,7 +1,7 @@
-import React, { useContext, useState, useHistory } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import React, { useState, useEffect } from "react";
+
 import AuthForm from "../AuthForm/AuthForm";
-import * as auth from "../../utils/auth";
+
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import validator from 'validator';
@@ -19,13 +19,59 @@ function Login({
     password: "",
   });
 
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [errorEmailClassname, setErrorEmailClassname] = useState("");
+  const [errorEmailMessage, setErrorEmailMessage] = useState("");
+  const [errorPassClassname, setErrorPassClassname] = useState("");
+  const [errorPassMessage, setErrorPassMessage] = useState("");
+
+
+
+  function checkFormValid() {
+    if (!validator.isEmail(userData.email) && userData.email !== '') {
+      setErrorEmailClassname('form__error_active');
+      setErrorEmailMessage('Поле Email должно содержать корректный адрес');
+      setButtonDisabled(true);
+    }
+    else {
+      setErrorEmailClassname('');
+      setErrorEmailMessage('');
+    }
+
+    if (userData.password.length < 8 && userData.password !== '') {
+      setErrorPassClassname('form__error_active');
+      setErrorPassMessage('Поле Пароль должно содержать не менее 8 символов');
+      setButtonDisabled(true);
+    }
+    else {
+      setErrorPassClassname('');
+      setErrorPassMessage('');
+    }
+    submitButtonDisabled();
+  }
+
+  function submitButtonDisabled() {
+    if (errorPassMessage === '' && errorEmailMessage === '' && userData.email !== '' && userData.password.length >= 8 ) {
+      setButtonDisabled(false);
+    }
+  }
+
+  useEffect(() => {    checkFormValid();
+    submitButtonDisabled();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData, buttonDisabled, errorEmailMessage, errorPassMessage]);
+
   function handleChange(e) {
+
     const { name, value } = e.target;
+
 
     setUserData({
       ...userData,
       [name]: value,
     });
+
+
   }
 
   function handleSubmit(e) {
@@ -35,11 +81,15 @@ function Login({
 
     if (validator.isEmail(email)) {
       onLogin(email, password)
-        .then((res) => {})
-        .catch((err) => {});
+        .then(() => {})
+        .catch(() => {});
     }
 
   }
+
+
+
+
 
   return (
     <>
@@ -54,7 +104,7 @@ function Login({
               onChange={handleChange}
               required
             />
-            <span className="form__error">Ошибка</span>
+            <span className={"form__error " + errorEmailClassname}>{errorEmailMessage}</span>
           </label>
           <label>
             <input
@@ -65,14 +115,14 @@ function Login({
               required
               onChange={handleChange}
             />
-            <span className="form__error">Ошибка</span>
+            <span className={"form__error " + errorPassClassname}>{errorPassMessage}</span>
           </label>
         </fieldset>
         <button
           aria-label="Войти"
           type="submit"
           className="button button_login"
-          onClick={handleSubmit}
+          onClick={handleSubmit} disabled={buttonDisabled}
         >
           Войти
         </button>
