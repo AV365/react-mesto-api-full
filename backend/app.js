@@ -56,7 +56,7 @@ app.get('/crash-test', () => {
 });
 app.use('/', router);
 app.use('*', () => {
-  throw new NotFoundError('Запрашиваемый ресурс не найден!');
+  throw new NotFoundError('Запрашиваемый ресурс не найден!!');
 });
 
 // лог ошибок
