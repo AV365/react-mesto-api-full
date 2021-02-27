@@ -29,7 +29,7 @@ const postCard = (req, res, next) => {
 const deleteCard = (req, res, next) => {
   Card.findById(req.params.id).then((data) => {
     if (!data) {
-      throw new BadRequestError(`Элемент ${req.params.id} не найден`);
+      throw new NotFoundError(`Элемент ${req.params.id} не найден`);
     }
     if (String(data.owner) !== String(req.user._id)) {
       throw new ForbiddenError('А теперь нельзя удалить!');
